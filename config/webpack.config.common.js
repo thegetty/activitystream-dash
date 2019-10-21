@@ -31,6 +31,18 @@ const webpackConfig = {
                 include: [ helpers.root('src') ]
             },
             {
+                test: /\.(png|jpe?g|gif|svg)$/i,
+                loader: 'file-loader',
+                options: {
+                    name(file) {
+                    if (process.env.NODE_ENV === 'development') {
+                        return '[path][name].[ext]';
+                    }
+                    return '[contenthash].[ext]';
+      },
+                },
+            },
+            {
                 test: /\.css$/,
                 use: [
                     isDev ? 'vue-style-loader' : MiniCSSExtractPlugin.loader,

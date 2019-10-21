@@ -11,8 +11,9 @@
     "build": "cross-env NODE_ENV=production webpack"
   },
   "dependencies": {
-    "bootstrap": "^4.3.1",
     "@babel/polyfill": "~7.2",
+    "bootstrap": "^4.3.1",
+    "file-loader": "^4.2.0",
     "jquery": "^3.4.1",
     "popper.js": "^1.16.0",
     "vue": "^2.6.10",
