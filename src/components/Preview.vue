@@ -4,12 +4,17 @@
     <div v-if="visiblePreview">
       <div v-if="jsonData !== undefined" class="card" style="width: auto;">
         <div class="card-header card-title">
-          <h6>{{ this.jsonData._label }}</h6>
+          <h6>{{ this.jsonData._label }} "{{ this.jsonData.type }}" - <a :href="jsonData.id">(item)</a></h6>
         </div>
         <div class="card-body">
-          <p class="card-text small">Type: {{ this.jsonData.type }} - <a :href="jsonData.id">(item)</a></p>
           <ul class="link-group link-group-flush">
-            <li class="list-group-item" v-for="ident in jsonData.identified_by">{{ ident._label }} ({{ident.type}}): {{ident.content}}</li>
+            <li class="list-group-item" v-for="ident in jsonData.identified_by">{{ ident._label }} ({{ident.type}}): {{ident.content}}
+              <ul v-if="ident.classified_as !== undefined">
+                <li v-for="classflinks in ident.classified_as"><a :href="classflinks.id">{{ classflinks._label }} </a><em>
+                  {{ vocabFlavour(classflinks.id) }}
+                </em></li>
+              </ul>
+            </li>
           </ul>
         </div>
       </div>
@@ -29,7 +34,10 @@ import loadingIcon from "../assets/ajax-loader.gif";
       return {
         status: 'hide',
         jsonData: undefined,
-        visiblePreview: false
+        visiblePreview: false,
+        vocabs: {
+          "http://vocab.getty.edu/aat": "(AAT)"
+        }
       };
     },
     methods: {
@@ -51,6 +59,15 @@ import loadingIcon from "../assets/ajax-loader.gif";
                       }, error => {
                       console.log(error);
                       });
+      },
+      vocabFlavour(subjURI) {
+        var vocabLabel = "";
+        Object.keys(this.vocabs).forEach((vk) => {
+          if (subjURI.startsWith(vk)) {
+            vocabLabel = this.vocabs[vk];
+          }
+        })
+        return vocabLabel;
       }
     },
     computed: {
