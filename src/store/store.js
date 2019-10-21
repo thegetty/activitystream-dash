@@ -13,10 +13,10 @@ export const store = new Vuex.Store({
     loadingState: 'idle',
     message: null,
     activities: {
-        Create: {src: require('../assets/tick.svg'), text: "Create"},
-        Update: {src: require('../assets/update.svg'), text: "+/-"},
-        Delete: {src: require('../assets/fail.svg'), text: "Delete"},
-        _default: {src: require('../assets/tick.svg'), text:""}
+        Create: {src: "/static/tick.svg", text: "Create"},
+        Update: {src: "/static/update.svg", text: "+/-"},
+        Delete: {src: "/static/fail.svg", text: "Delete"},
+        _default: {src: "/static/tick.svg", text:""}
     }
   },
   mutations: {

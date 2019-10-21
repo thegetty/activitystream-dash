@@ -12,10 +12,9 @@
         </div>
       </div>
       <div v-else>
-        <div style="height: 20px" class="text-center"><img src="../assets/ajax-loader.gif" alt="Loading"></div>
+        <div style="height: 20px" class="text-center"><img src="/static/ajax-loader.gif" alt="Loading"></div>
       </div>
     </div>
-    <hr/>
   </span>
 </template>
 

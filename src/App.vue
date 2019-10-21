@@ -64,9 +64,9 @@ export default {
   data() {
     return {
       icons: {
-        fail: {color: 'lightcoral', src: require('./assets/fail.svg')},
-        done: {color: 'lightgreen', src: require('./assets/tick.svg')},
-        loading: {color: 'white', src: require('./assets/ajax-loader.gif')}
+        fail: {color: 'lightcoral', src: "/static/fail.svg"},
+        done: {color: 'lightgreen', src: "/static/tick.svg"},
+        loading: {color: 'white', src: "/static/ajax-loader.gif"}
       },
       itemMax:200,
       tmpStateList: ['done', 'loading', 'fail', 'idle'],

@@ -8,39 +8,41 @@
     <div class="panel panel-body" v-for="activityItem in activityStream()" :key="activityItem.id">
       <div class="row">
         <div :class="getClass(activityItem)"
-          class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
-          <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+             class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+          <div class="row align-items-center">
+            <div class="col-xs-4 col-sm-4 col-md-6 col-lg-6">
               <img :src="getIcon(activityItem)" :alt="getText(activityItem)"
-              style="display: inline; width: 18px; height:15px;"> {{ activityItem.type }} <span v-if="activityItem.actor"> by </span>{{ activityItem.actor }}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <a :href="activityItem.object.id">Item</a>
+              style="display: inline; width: 18px; height:15px;"> {{ activityItem.type }}
+              <span v-if="activityItem.actor"> by </span>{{ activityItem.actor }}
+              <span v-if="activityItem.published !== undefined" class="pubdate"> {{ formatDate(activityItem.published) }}</span>
             </div>
             <div class="col">
-              <span class=""><a :href="activityItem.id">Activity</a></span>
+              <a :href="activityItem.object.id">Object <img src="/static/External_link_font_awesome.svg" style="height: 1em; width: auto;"/></a>
+            </div>
+            <div class="col">
+              <span class=""><a :href="activityItem.id">Event <img src="/static/External_link_font_awesome.svg" style="height: 1em; width: auto;"/></a></span>
             </div>
             <div class="col">
               <button type="button"
               data-toggle="collapse"
               :data-target="'#itemdates'+activityItem.id.replace(/[^\w\s]/gi, '')"
-              class="visible-xs visible-sm collapsed btn btn-link btn-sm">Dates:</button>
+              class="visible-xs visible-sm collapsed btn btn-light">Dates:</button>
             </div>
           </div>
           <div class="row">
             <div class="col">
               <ul class="col dates-block collapse small list-group list-group-flush" :id="'itemdates'+activityItem.id.replace(/[^\w\s]/gi, '')" >
-                <li class="list-group-item" v-if="activityItem.created !== undefined">Created: {{ activityItem.created }}</li>
-                <li class="list-group-item" v-if="activityItem.updated !== undefined">Updated: {{ activityItem.updated }}</li>
-                <li class="list-group-item" v-if="activityItem.published !== undefined">Published: {{ activityItem.published }}</li>
+                <li class="list-group-item" v-if="activityItem.created !== undefined">Created: {{ new Date(activityItem.created).toLocaleString() }}</li>
+                <li class="list-group-item" v-if="activityItem.updated !== undefined">Updated: {{ new Date(activityItem.updated).toLocaleString() }}</li>
+                <li class="list-group-item" v-if="activityItem.published !== undefined">Published: {{ new Date(activityItem.published).toLocaleString() }}</li>
               </ul>
             </div>
           </div>
         </div>
-        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-          <preview-item :url="activityItem.object.id"> </preview-item> 
+        <div class="row align-items-center">
+          <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+            <preview-item :url="activityItem.object.id"> </preview-item> 
+          </div>
         </div>
       </div>
     </div>
@@ -86,6 +88,10 @@
       }
     },
     methods: {
+      formatDate(dateString) {
+        var d = new Date(dateString);
+        return d.toLocaleTimeString() + " (" + d.toLocaleDateString() + ")";
+      },
       getTopLevel() {
         console.log('Getting Top Level information');
         var jsondata;
@@ -218,8 +224,8 @@
 
 <style scoped>
 .activity {
-  font-weight: bold;
   font-size: 1em;
+  border-bottom: thin solid black;
 }
 .activity-old {
   font-weight: normal;
@@ -229,6 +235,11 @@
 .activity-new {
   font-weight: bold;
   font-size: 1.1em;
+}
+
+.pubdate {
+  font-size: 0.6em;
+  font-style: italic;
 }
 
 /* Each activity will have an 'activity-ACTIVITYTYPE' class attached */
@@ -241,6 +252,10 @@
 }
 .activity-Update {
   background-color: lightgrey;
+}
+
+.list-group-item {
+  padding: 6px 10px;
 }
 
 @include media-breakpoint-up(md)
