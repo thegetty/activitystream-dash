@@ -117,6 +117,7 @@
                       });
       },
       pollPage() {
+        this.ready = false; // turn off event refresh listener
         var url = this.$store.state.feeds[this.feedName].nextPage;
         this.$store.commit('changeState', 'loading');
         console.log("pollPage " + url);
@@ -172,6 +173,7 @@
             this.$store.commit('replaceStreamWithPolled', this.feedName);
           }
           this.$store.commit('trimStream', {feed: this.feedName, maxLength: this.itemMax});
+          this.ready = true; // ready for another refresh now
           this.$store.commit('changeState', 'done');
           setTimeout(() => {
             this.$store.commit('changeState', 'idle');

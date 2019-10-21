@@ -13,16 +13,41 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item disabled">
-              <a href="#" class="nav-link">Combined Feed</a></li>
             <li class="nav-item dropdown active">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Feeds
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <div href="#" class="dropdown-item" v-for="feed in feedlist">
-                  <a @click="changeFeed(feed)" style="cursor: pointer;">{{ feed }}</a>
+                <div href="#" class="dropdown-item" v-for="feed in feedlist"
+                              :class="{ active: feed === currentFeed }" @click="changeFeed(feed)">
+                  {{ feed }}
+                </div>
+              </div>
+            </li>
+            <li class="nav-item dropdown active">
+              <a class="nav-link dropdown-toggle" href="#" id="pollSizeDropdown" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Poll size
+              </a>
+              <div class="dropdown-menu" aria-labelledby="pollSizeDropdown">
+                <div href="#" class="dropdown-item" v-for="pollSize in refreshSizes"
+                              :class="{ active: pollSize === itemMax }" @click="changePollSize(pollSize)"
+                              style="cursor: pointer;">
+                  {{ pollSize }}
+                </div>
+              </div>
+            </li>
+            <li class="nav-item dropdown active">
+              <a class="nav-link dropdown-toggle" href="#" id="pollRateDropdown" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Poll every
+              </a>
+              <div class="dropdown-menu" aria-labelledby="pollRateDropdown">
+                <div href="#" class="dropdown-item" v-for="rate in refreshRates"
+                              :class="{ active: rate === refreshSeconds }" @click="changeRefreshRate(rate)"
+                              style="cursor: pointer;">
+                  {{ rate }}s
                 </div>
               </div>
             </li>
@@ -37,7 +62,7 @@
                             :itemMax="itemMax"></app-feed-display>
       </div>
     </div>
-  <footer v-if="message" class="alert alert-info">{{ message }}</footer>
+    <footer v-if="message" class="alert alert-info">{{ message }}</footer>
 
 <!-- DEBUG responses -->
 
@@ -72,7 +97,9 @@ export default {
         done: {color: 'lightgreen', src: tickIcon},
         loading: {color: 'white', src: loadIcon}
       },
-      itemMax:200,
+      refreshSizes: [10,50,100,200],
+      refreshRates: [5,10,20,30,60],
+      itemMax:50,
       tmpStateList: ['done', 'loading', 'fail', 'idle'],
       debug: false
     };
@@ -97,17 +124,28 @@ export default {
     },
     changeFeed(feed) {
       this.$store.state.currentFeed = feed;
+    },
+    changePollSize(size) {
+      console.log("Changed size to "+size);
+      this.itemMax = size;
+    },
+    changeRefreshRate(rate) {
+      console.log("Changed rate to "+rate);
+      this.$store.state.refreshRate = rate * 1000;
     }
   },
   computed: {
     message() {
-      return this.$store.state.message;
+      return "Poll size: " + this.itemMax + " activities, polls every " + this.refreshSeconds + "s.";
     },
     currentFeed() {
       return this.$store.state.currentFeed;
     },
     feedlist() {
       return this.$store.state.feedlist;
+    },
+    refreshSeconds() {
+      return Math.floor(this.$store.state.refreshRate / 1000);
     }
   },
   created() {

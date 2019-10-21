@@ -13,6 +13,7 @@ export const store = new Vuex.Store({
     feedlist: [
       "https://mart.getty.edu/activity-stream"
     ],
+    refreshRate: 10000,
     currentFeed: null,
     loadingState: 'idle',
     message: null,

@@ -2,12 +2,14 @@
   <span>
     <button class="btn btn-info btn-sm preview-button" @click="previewToggle">{{ toggleText }}</button>
     <div v-if="visiblePreview">
-      <div v-if="jsonData !== undefined" class="card">
+      <div v-if="jsonData !== undefined" class="card" style="width: auto;">
+        <div class="card-header card-title">
+          <h6>{{ this.jsonData._label }}</h6>
+        </div>
         <div class="card-body">
-          <h5 class="card-title">{{ this.jsonData._label }}</h5>
           <p class="card-text small">Type: {{ this.jsonData.type }} - <a :href="jsonData.id">(item)</a></p>
-          <ul>
-            <li v-for="ident in jsonData.identified_by"><a :href="ident.id">{{ ident._label }} ({{ident.type}}): {{ident.content}}</a></li>
+          <ul class="link-group link-group-flush">
+            <li class="list-group-item" v-for="ident in jsonData.identified_by">{{ ident._label }} ({{ident.type}}): {{ident.content}}</li>
           </ul>
         </div>
       </div>
@@ -19,7 +21,7 @@
 </template>
 
 <script>
-import loadIcon from "../assets/ajax-loader.gif";
+import loadingIcon from "../assets/ajax-loader.gif";
 
   export default {
     props: ['url'],
@@ -58,6 +60,9 @@ import loadIcon from "../assets/ajax-loader.gif";
         } else {
           return "Preview";
         }
+      },
+      loadIcon() {
+        return loadingIcon;
       }
     }
   }
@@ -71,6 +76,10 @@ import loadIcon from "../assets/ajax-loader.gif";
 
   .card {
     font-size: smaller;
+  }
+
+  .list-group-item {
+    padding: 6px 10px;
   }
 
 </style>

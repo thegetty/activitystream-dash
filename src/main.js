@@ -17,15 +17,18 @@ new Vue({
   render: h => h(App),
   methods: {
     loadData() {
-      console.log("'loadData' called here");
+      var refreshPeriod = 10000;
       tickerBus.$emit('pulse');
+      if (this.$store.state.refreshRate !== undefined) {
+        refreshPeriod = this.$store.state.refreshRate;
+        console.log("Setting the refresh period to " + refreshPeriod);
+      }
+      setTimeout(function () {
+        this.loadData();
+      }.bind(this), refreshPeriod);   // 10 second interval
     }
   },
   mounted() {
     this.loadData();
-
-    setInterval(function () {
-      this.loadData();
-    }.bind(this), 10000);   // 10 second interval
   }
 });
