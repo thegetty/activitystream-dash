@@ -17,10 +17,10 @@
               <span v-if="activityItem.published !== undefined" class="pubdate"> {{ formatDate(activityItem.published) }}</span>
             </div>
             <div class="col">
-              <a :href="activityItem.object.id">Object <img src="/static/External_link_font_awesome.svg" style="height: 1em; width: auto;"/></a>
+              <a :href="activityItem.object.id">Object <img :src="linkIcon" style="height: 1em; width: auto;"/></a>
             </div>
             <div class="col">
-              <span class=""><a :href="activityItem.id">Event <img src="/static/External_link_font_awesome.svg" style="height: 1em; width: auto;"/></a></span>
+              <span class=""><a :href="activityItem.id">Event <img :src="linkIcon" style="height: 1em; width: auto;"/></a></span>
             </div>
             <div class="col">
               <button type="button"
@@ -53,6 +53,7 @@
 <script>
   import { tickerBus } from '../main';
   import Preview from './Preview.vue';
+  import extlinkIcon from "../assets/extlink.svg";
 
   export default {
     data() {
@@ -85,6 +86,9 @@
         } else {
           return this.feedName;
         }
+      },
+      linkIcon() {
+        return extlinkIcon;
       }
     },
     methods: {

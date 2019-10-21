@@ -12,13 +12,15 @@
         </div>
       </div>
       <div v-else>
-        <div style="height: 20px" class="text-center"><img src="/static/ajax-loader.gif" alt="Loading"></div>
+        <div style="height: 20px" class="text-center"><img :src="loadIcon" alt="Loading"></div>
       </div>
     </div>
   </span>
 </template>
 
 <script>
+import loadIcon from "../assets/ajax-loader.gif";
+
   export default {
     props: ['url'],
     data() {

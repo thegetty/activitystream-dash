@@ -1,6 +1,10 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+import failIcon from "../assets/fail.svg";
+import tickIcon from "../assets/tick.svg";
+import updateIcon from "../assets/update.svg"
+
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
@@ -13,10 +17,10 @@ export const store = new Vuex.Store({
     loadingState: 'idle',
     message: null,
     activities: {
-        Create: {src: "/static/tick.svg", text: "Create"},
-        Update: {src: "/static/update.svg", text: "+/-"},
-        Delete: {src: "/static/fail.svg", text: "Delete"},
-        _default: {src: "/static/tick.svg", text:""}
+        Create: {src: tickIcon, text: "Create"},
+        Update: {src: updateIcon, text: "+/-"},
+        Delete: {src: failIcon, text: "Delete"},
+        _default: {src: tickIcon, text:""}
     }
   },
   mutations: {

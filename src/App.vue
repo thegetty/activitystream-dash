@@ -60,13 +60,17 @@ import Status from './components/Status.vue';
 import FeedDisplay from './components/FeedDisplay.vue';
 import { tickerBus } from './main';
 
+import failIcon from "./assets/fail.svg";
+import tickIcon from "./assets/tick.svg";
+import loadIcon from "./assets/ajax-loader.gif";
+
 export default {
   data() {
     return {
       icons: {
-        fail: {color: 'lightcoral', src: "/static/fail.svg"},
-        done: {color: 'lightgreen', src: "/static/tick.svg"},
-        loading: {color: 'white', src: "/static/ajax-loader.gif"}
+        fail: {color: 'lightcoral', src: failIcon},
+        done: {color: 'lightgreen', src: tickIcon},
+        loading: {color: 'white', src: loadIcon}
       },
       itemMax:200,
       tmpStateList: ['done', 'loading', 'fail', 'idle'],
