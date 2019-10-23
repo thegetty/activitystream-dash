@@ -1,0 +1,2 @@
+docker run --rm -v "${PWD}:/$(basename `pwd`)" -w "/$(basename `pwd`)" -p 8080:8080 -it node:11.1-alpine sh
+mkdir webpack && cd "$_" && docker run --rm -v "${PWD}:/$(basename `pwd`)" -w "/$(basename `pwd`)" -it node:11.1-alpine sh -c "yarn global add @vue/cli @vue/cli-init && vue init webpack-simple vue-cli"
