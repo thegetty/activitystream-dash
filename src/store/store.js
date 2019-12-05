@@ -40,7 +40,7 @@ export const store = new Vuex.Store({
           // newest to oldest, but should be older than what's there already
           state.feeds[pkg.feed].polledItems.push(item);
         });
-        state.feeds[pkg.feed].nextPage = pkg.jsonData.previous ? pkg.jsonData.previous.id : null;
+        state.feeds[pkg.feed].nextPage = pkg.jsonData.prev ? pkg.jsonData.prev.id : null;
       }
     },
     setNextPage(state, pkg) {
