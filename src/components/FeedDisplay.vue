@@ -41,7 +41,7 @@
         </div>
         <div class="row align-items-center">
           <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-            <preview-item :url="activityItem.object.id"> </preview-item> 
+            <preview-item :url="activityItem.object.id" v-if="activityItem.type !== 'Delete'"> </preview-item> 
           </div>
         </div>
       </div>
