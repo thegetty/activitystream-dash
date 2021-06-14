@@ -1,5 +1,7 @@
 # activityStreamDash
 
+(ARCHIVED. Given changes to Vue and JS build/deploy landscape, it would be better to reimplement this functionality cleanly, than to fork and 'repair' this as it was only a Proof of Concept anyhow.)
+
 > Dashboard for Getty activityStream endpoints
 
 ## Build Setup
